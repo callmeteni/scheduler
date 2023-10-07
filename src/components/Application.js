@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   getAppointmentsForDay,
   getInterviewersForDay,
@@ -20,6 +19,7 @@ export default function Application(props) {
     bookInterview,
     cancelInterview
   } = useApplicationData();
+
 
   const interviewers = getInterviewersForDay(state, state.day);
 

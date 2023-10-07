@@ -1,6 +1,7 @@
 import React from "react";
 
 import "components/Appointment/styles.scss";
+import useVisualMode from "hooks/useVisualMode";
 
 import Header from "components/Appointment/Header";
 
@@ -8,18 +9,31 @@ import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 
 export default function Appointment(props) {
-  return (
+  const EMPTY = "EMPTY";
+  const SHOW = "SHOW";
+  const CREATE = "CREATE";
+
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
+
+  const onAdd = () => {
+    transition(CREATE);
+  }
+
+   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
-      {props.interview ?
+      {mode === EMPTY && <Empty onAdd={onAdd} />} {/* Pass the updated onAdd function */}
+      {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onDelete={() => console.log("CONFIRM")}
-          onEdit={() => console.log("EDIT")}
         />
-        :
-        <Empty onAdd={() => console.log("CREATE")} />}
+      )}
+      {mode === CREATE && (
+        /* Render your component for the CREATE mode here */
+      )}
     </article>
   );
 }
