@@ -19,21 +19,20 @@ export default function Appointment(props) {
 
   const onAdd = () => {
     transition(CREATE);
-  }
+  };
 
-   return (
+  return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
-      {mode === EMPTY && <Empty onAdd={onAdd} />} {/* Pass the updated onAdd function */}
+      {mode === EMPTY && <Empty onAdd={onAdd} />}{" "}
+      {/* Pass the updated onAdd function */}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
         />
       )}
-      {mode === CREATE && (
-        /* Render your component for the CREATE mode here */
-      )}
+      {mode === CREATE && <Form interviewers={props.interviewers} />}
     </article>
   );
 }
